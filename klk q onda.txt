@@ -25,3 +25,94 @@ NOTA:CADA MODO DE OPERACION, TI
 
 
 
+ en
+conf t
+no ip domain-lookup
+banner motd #Si entras a este equipo sin permisos, caeras preso feamente#
+hostname SD-Dapiato-SW1
+enable secret Klk001#
+username kfh privilege 15 secret Hola123@
+ip domain-name dapiato.com
+crypto key generate rsa 
+
+1024
+
+ ip ssh time-out 60
+ip ssh version 2
+ip ssh authentication-retries 3
+line con 0
+pass NBA123*
+logging synchronous
+login local
+line vty 0 15
+login local
+logging synchronous
+transport input ssh
+no transport input telnet
+end
+
+kfh freelancer: copy run start
+reload
+
+
+
+
+
+
+
+
+direccion ipv4 de red = 198.0.2.0
+	prefijo de red = /24
+	mascara de subred = 255.255.255.0
+	cantidad de equipos = 34
+	direccion ipv4 del router = 
+	direccion ipv4 del switch =
+	direccion ipv4 del broadcast = 
+	direccion ipv4 estaticas =
+	direccion ipv4 por dhcp=
+
+vlsm = variable lenght subnet mask(mascara de subred de longitud variable )
+
+paso 1: identificar las propiedades de la direccion ipv4 por defecto
+
+198.0.2.0 /24 (255.255.255.0) = 256 direcciones ipv4
+
+paso 2: identificar la necesidad de la red actual 
+
+equipos necesarios: 30
+
+paso 3. modificar la mascara de subred, para ajustarla a las necesidades
+reales
+
+	1.tomar la porcion de la mascara de subred que se puede modificar
+		.0
+	2.convertir la porcion de la mascara de subred en binario 
+		000000000000
+	3.encender los bits necesaris hasta que la mascara se ajuste al
+	  requerimiento 
+		000000000000
+
+
+
+
+plan de direccionamiento ipv4 por cada red
+
+Red Dapiato SD:
+    
+    prefijo de red = /27
+    mascara de subred = 255.255.255.224
+    cantidad de direcciones ipv4 = 32
+    cantidad de equipos = 30
+    direccion ipv4 de red = 198.0.2.0
+    direccion ipv4 del broadcast = 198.0.2.31
+    direcciones ipv4 disponibles = 30
+        direccion ipv4 del router = 198.0.2.1
+        direccion ipv4 del sw1 = 198.0.2.2
+        direccion ipv4 del sw2 = 198.0.2.3
+        direccion ipv4 de server = 198.0.2.4
+        direccion ipv4 del soporte = 198.0.2.5
+        coordina = 198.0.2.6
+        secretar = 198.0.2.7
+        director = 198.0.2.8
+    direcciones ipv4 por dhcp = desde la 198.0.2.9 hasta la 198.0.2.30
+💡 Justificación del Cálculo VLSMLa sección inferior del Bloc de Notas contiene la tabla de cálculo que confirma el uso del prefijo /27:Bit Value (Potencia de 2)1286432168421Total (256)Porción de Red (1)11111100= 256 - 32 (Hosts)Porción de Host (0)00000000Máscara (255.255.255.)32
